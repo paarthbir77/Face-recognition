@@ -91,15 +91,15 @@ def cosinesim(normalize_a, normalize_b):
     cosinedist = (tf.Session().run(s))
     return 1-cosinedist
 
-def findEuclideanDistance(source_representation, test_representation):
-    euclidean_distance = source_representation - test_representation
+def findEuclideanDistance(source, test):
+    euclidean_distance = source - test
     euclidean_distance = np.sum(np.multiply(euclidean_distance, euclidean_distance))
     euclidean_distance = np.sqrt(euclidean_distance)
     return euclidean_distance
 
 vgg_face_descriptor = Model(inputs=model.layers[0].input, outputs=model.layers[-2].output)
 
-epsilon = 0.45
+thresh = 0.45
 
 
 def verifyFace(img1, img2, str1, str2):
@@ -112,10 +112,10 @@ def verifyFace(img1, img2, str1, str2):
     print("Cosine similarity: ", cosine_similarity)
     print("Euclidean distance: ", euclidean_distance)
 
-    if (cosine_similarity < epsilon):
-        print("verified... they are same person")
+    if (cosine_similarity < thresh):
+        print("Yes, same person!")
     else:
-        print("unverified! they are not same person!")
+        print("They are not same person!")
 
     print("-----------------------------------------")
 
@@ -148,7 +148,3 @@ verifyFace(img, imgset, str1, str2)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
-
-
-
-

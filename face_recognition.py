@@ -1,3 +1,4 @@
+#Importing required libraries
 from keras.models import model_from_json
 from keras.models import Model, Sequential
 from keras.layers import Input, Conv2D, ZeroPadding2D, MaxPool2D, Flatten, Dense, Dropout, Activation
@@ -13,11 +14,12 @@ import matplotlib.image as mpimg
 
 import os
 import tensorflow as tf
+#To overcome 10% memory error on Tensorflow
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 #keras.backend.set_image_data_format('channels_first')
-
+# Defining Model VGG-Face
 model = Sequential()
 model.add(ZeroPadding2D((1,1),input_shape=( 224,224, 3)))
 model.add(Conv2D(64, (3, 3), activation='relu'))
@@ -77,6 +79,7 @@ def preprocess_image(image_path):
     img = preprocess_input(img)
     return img
 
+#Functions to find image distance
 def findCosineSimilarity(source_representation, test_representation):
     a = np.matmul(np.transpose(source_representation), test_representation)
     b = np.sum(np.multiply(source_representation, source_representation))
@@ -99,6 +102,7 @@ def findEuclideanDistance(source, test):
 
 vgg_face_descriptor = Model(inputs=model.layers[0].input, outputs=model.layers[-2].output)
 
+# Setting threshold for CosineSimilarity
 thresh = 0.45
 
 
@@ -122,6 +126,7 @@ def verifyFace(img1, img2, str1, str2):
 import cv2 as cv
 #img = cv.imread("/home/paarth/Downloads/fer_test/t7fer.jpg")
 
+#Testing images
 str1 = "/home/paarth/Downloads/rdj_data.jpg"
 #str2 = "/home/paarth/Downloads/rdj_test.jpg"
 str2 = "/home/paarth/Downloads/rdj_test2.jpeg"

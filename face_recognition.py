@@ -66,12 +66,13 @@ model.add(Flatten())
 model.add(Activation('softmax'))
 print("model made")
 
-
+#Load pre-trained weights from vgg_face
 #model.load_weights('/home/paarth/Downloads/vgg-face-keras.h5')
 model.load_weights('/home/paarth/Downloads/vgg_face_weights.h5')
 
 print("model loaded")
 
+#Preprocess image to get into target input shape and convert to array.
 def preprocess_image(image_path):
     img = load_img(image_path, target_size=(224, 224))
     img = img_to_array(img)
@@ -124,8 +125,6 @@ def verifyFace(img1, img2, str1, str2):
     print("-----------------------------------------")
 
 import cv2 as cv
-#img = cv.imread("/home/paarth/Downloads/fer_test/t7fer.jpg")
-
 #Testing images
 str1 = "/home/paarth/Downloads/rdj_data.jpg"
 #str2 = "/home/paarth/Downloads/rdj_test.jpg"
